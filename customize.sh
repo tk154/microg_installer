@@ -11,9 +11,6 @@ if ! $BOOTMODE; then
 fi
 mmm_exec setSupportLink "https://github.com/nift4/microg_installer_revived/issues"
 
-MAX_VER="240913008"
-MAX_VERN="0.3.4.240913"
-
 if [ -f /data/adb/Phonesky.apk ]; then
     ui_print "- INFO: Phonesky.apk is found in /data/adb, but this module no longer uses this file."
     ui_print "- INFO: It won't break anything, but having that there won't make you use real Play Store anymore."
@@ -43,12 +40,6 @@ fi
 ui_print "Checking if com.google.android.gms is microG"
 if ! (echo "$DUMP_GMS" | grep "android.permission.FAKE_PACKAGE_SIGNATURE") >/dev/null; then
     abort "- ERROR: You appear to have Google Play Services installed instead of microG."
-fi
-ui_print "Checking if com.google.android.gms is a supported version"
-GMS_VER="$(echo "$DUMP_GMS" | grep versionCode | head -n1 | cut -d" " -f5 | cut -d= -f2)"
-GMS_VERN="$(echo "$DUMP_GMS" | grep versionName | head -n1 | cut -d" " -f5 | cut -d= -f2)"
-if [[ "$GMS_VER" -gt "$MAX_VER" ]]; then
-    abort "- ERROR: You have microG version $GMS_VERN ($GMS_VER) but the maximum supported version is $MAX_VERN ($MAX_VER)."
 fi
 # check Vending
 ui_print "Collecting information about com.android.vending"
